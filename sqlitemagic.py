@@ -59,7 +59,16 @@ class SQLiteMagic(Magics):
 
     @magic_arguments()
     @argument(
-        'conn'
+        'conn',
+        help="`sqlite3.Connection` object."
+    )
+    @argument(
+        '--commit', '-c', action='store_true',
+        help="Run ``CONN.commit()``."
+    )
+    @argument(
+        '--script', '-s', action='store_true',
+        help="Run multiple statements.  Result table will not be shown."
     )
     @cell_magic('sqlite_execute')
     def execute(self, line, cell):
@@ -75,7 +84,12 @@ class SQLiteMagic(Magics):
         args = parse_argstring(self.execute, line)
         conn = self.shell.ev(args.conn)
         cursor = conn.cursor()
-        self.show_rows(cursor.execute(cell))
+        if args.script:
+            cursor.executescript(cell)
+        else:
+            self.show_rows(cursor.execute(cell))
+        if args.commit:
+            conn.commit()
 
     @magic_arguments()
     @argument(
