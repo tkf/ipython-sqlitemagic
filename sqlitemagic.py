@@ -136,6 +136,13 @@ class SQLiteMagic(Magics):
         tt.add_row(row)
         tt.add_rows(rows, header=False)
         print(tt.draw())
+        if limit >= 0:
+            try:
+                next(cursor)
+                print("More than {0} rows found.  Use -l or --limit to "
+                      "change limit.".format(limit))
+            except:
+                pass
 
 
 def load_ipython_extension(ip):
