@@ -124,6 +124,7 @@ class SQLiteMagic(Magics):
 
         """
         tt = texttable.Texttable()
+        tt.set_deco(texttable.Texttable.HEADER)
         rows = itertools.islice(cursor, limit) if limit >= 0 else cursor
         try:
             row = next(rows)
