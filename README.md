@@ -77,5 +77,5 @@ texttable
 
 ## License
 
-RASH is licensed under the Simplified BSD License.
+ipython-sqlitemagic is licensed under the Simplified BSD License.
 See the source code for more details.
